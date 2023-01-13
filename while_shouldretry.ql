@@ -23,7 +23,7 @@ predicate lacksComparisonCondition(LoopStmt st) {
     not st.getCondition().getAChildExpr() instanceof ComparisonExpr
 }
 
-from WhileStmt st, MethodAccess ma
+from LoopStmt st, MethodAccess ma
 where isSource(st) and
 ma.getMethod().getName().toLowerCase().matches("%shouldretry%")
 and ma.getAnEnclosingStmt() = st
