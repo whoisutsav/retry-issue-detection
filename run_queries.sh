@@ -4,7 +4,7 @@
 
 OUTPUT_DIR=output
 #APPS=(cassandra hadoop hbase hive spark zookeeper kafka) 
-APPS=(apache_hadoop_ee7d178)
+APPS=(elastic_elasticsearch_7556157)
 
 
 if [ "$#" -eq 2 ]; then

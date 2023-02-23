@@ -8,21 +8,41 @@ import java
 
 class GithubLocation extends Location {
   string getGithubURL() {
-  	result = "https://github.com/apache/hive/tree/" + "/" + 
-				"e427ce0" + "/" + 
+  	result = "https://github.com/%%GITHUB_NAMESPACE%%/tree/" + "/" + 
+				"%%COMMIT_SHA%%" + "/" + 
 				this.toString().replaceAll("file:///opt/src", "").regexpReplaceAll(":(\\d+):\\d+:\\d+:\\d+$", "#L$1")
   }
 }
 
 predicate isRetryLoop(LoopStmt l) {
-  /* exists(VarAccess va | va.getVariable().getName().toLowerCase().matches("%retry%")
-			and va.getAnEnclosingStmt() = l) */
 
-  exists(Expr e | e.getAnEnclosingStmt() = l and e.toString().toLowerCase().matches("%retry%"))
+  /*
+    exists (Expr e | e.getAnEnclosingStmt() = l and
+                        (e instanceof VarAccess or e instanceof MethodAccess) and
+                        e.toString().toLowerCase().matches("%retry%") or e.toSstring().toLowerCase().matches("%retries%"))
+
+        or
+    exists (StringLiteral s | s.getAnEnclosingStmt() = l and s.getValue().matches("%retry%") or s.getValue().matches("%retries%"))
+  */
+
+  (not l instanceof EnhancedForStmt)
+    and
+  exists(Expr e | e.getAnEnclosingStmt() = l and (e.toString().toLowerCase().matches("%retry%") or e.toString().toLowerCase().matches("%retries%")))
+	and
+  (hasExceptionHandling(l) or exists(Exception e | e.getName() != "InterruptedException" and e = l.getEnclosingCallable().getAnException()))
+}
+
+predicate hasExceptionHandling(Stmt s) {
+	exists(CatchClause cc | not cc.getACaughtType().toString().matches("%InterruptedException%") and cc.getEnclosingStmt*() = s)
+}
+
+predicate isSleepMethod(MethodAccess m) {
+	m.getMethod().hasQualifiedName("java.lang", "Thread", "sleep") or
+	m.getMethod().hasQualifiedName("java.util.concurrent", "TimeUnit", "sleep") 
 }
 
 predicate hasSleep(Stmt s) {
-  exists(MethodAccess m | m.getMethod().hasQualifiedName("java.lang", "Thread", "sleep") and m.getAnEnclosingStmt() = s) 
+  exists(MethodAccess m | isSleepMethod(m) and m.getAnEnclosingStmt() = s) 
 }
 
 predicate isSource(Element e) {
@@ -33,12 +53,6 @@ predicate isJavaMethod(Method m) {
   m.getQualifiedName().matches("java%") or m.getQualifiedName().matches("%slf4j%")
 }
 
-predicate hasCapOnRetries(LoopStmt st) {
-	(st.getCondition() instanceof ComparisonExpr 
-		or st.getCondition().getAChildExpr() instanceof ComparisonExpr)
-		or
-	exists(IfStmt is | is.getEnclosingStmt*() = st and (is.getCondition().toString().toLowerCase().matches("%retry%") or is.getCondition().getAChildExpr().toString().toLowerCase().matches("%retry%")))
-}
 
 from LoopStmt l 
 where isRetryLoop(l) and
