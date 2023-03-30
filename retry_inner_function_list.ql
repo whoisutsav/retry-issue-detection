@@ -27,13 +27,6 @@ predicate isRetryLoop(LoopStmt l) {
 	and
   (hasExceptionHandling(l) or exists(Exception e | e.getName() != "InterruptedException" and e = l.getEnclosingCallable().getAnException()))
   
-
-  /*
-  (not l instanceof EnhancedForStmt)
-    and
-  exists(Expr e | e.getAnEnclosingStmt() = l and (e.toString().toLowerCase().matches("%retry%") or e.toString().toLowerCase().matches("%retries%")))
-	and
-  (hasExceptionHandling(l) or exists(Exception e | e.getName() != "InterruptedException" and e = l.getEnclosingCallable().getAnException()))*/
 }
 
 predicate hasExceptionHandling(Stmt s) {
@@ -44,15 +37,11 @@ predicate isSource(Element e) {
  not e.getCompilationUnit().getFile().getRelativePath().toLowerCase().matches("%test%") 
 }
 
-predicate isJavaMethod(Method m) {
-  m.getQualifiedName().matches("java%") or m.getQualifiedName().matches("%slf4j%")
-}
 
 predicate isCaughtTopLevel(LoopStmt loop, CatchClause cc) {
 	cc.getEnclosingStmt*() = loop
 			and
 	not exists(CatchClause cc2 | cc != cc2 and cc2.getEnclosingStmt*() = loop and cc.getEnclosingStmt*() = cc2.getBlock())
-
 }
 
 predicate hasSuccessor(ControlFlowNode node, Expr expr) {
@@ -148,35 +137,20 @@ string getMethodList(LoopStmt loop, RefType ex) {
 					| ma.getMethod().getName()+"#"+ma.getLocation().getStartLine(), ";") + ")"
 }
 
-
-/*
-from LoopStmt l 
-where 
-	isSource(l)
-		and
-	isRetryLoop(l)
-select l.getLocation().(GithubLocation).getGithubURL(),
-	concat(RefType t | isCaughtExactlyAndRetried(l,t) | t.toString(), " | "),
-	concat(RefType t | isCaughtExactlyAndNotRetried(l,t) | t.toString(), " | "),
-	concat(RefType t | isNotCaught(l,t) | t.toString(), " | "),
-*/
+boolean isRetried(LoopStmt loop, RefType type) {
+	(isCaughtExactlyAndRetried(loop, type) or isCaughtImplicitlyAndRetried(loop, type)) and result=true
+		or
+	not isCaughtExactlyAndRetried(loop, type) and not isCaughtImplicitlyAndRetried(loop, type) and result=false
+}
 
 
-from ThrowableType tt
-where 
-		count(LoopStmt loop | isSource(loop) and isRetryLoop(loop) and isCaughtExactlyAndRetried(loop, tt) | loop) > 0 or
-		count(LoopStmt loop | isSource(loop) and isRetryLoop(loop) and isCaughtImplicitlyAndRetried(loop, tt) | loop) > 0 or
-		count(LoopStmt loop | isSource(loop) and isRetryLoop(loop) and isCaughtExactlyAndNotRetried(loop, tt) | loop) > 0 or 
-		count(LoopStmt loop | isSource(loop) and isRetryLoop(loop) and isCaughtImplicitlyAndNotRetried(loop, tt) | loop) > 0 or 
-		count(LoopStmt loop | isSource(loop) and isRetryLoop(loop) and isNotCaught(loop, tt) | loop) > 0
-select tt.getQualifiedName(),
-		count(LoopStmt loop | isSource(loop) and isRetryLoop(loop) and isCaughtExactlyAndRetried(loop, tt) | loop), 
-		count(LoopStmt loop | isSource(loop) and isRetryLoop(loop) and isCaughtImplicitlyAndRetried(loop, tt) | loop),
-		count(LoopStmt loop | isSource(loop) and isRetryLoop(loop) and isCaughtExactlyAndNotRetried(loop, tt) | loop), 
-		count(LoopStmt loop | isSource(loop) and isRetryLoop(loop) and isCaughtImplicitlyAndNotRetried(loop, tt) | loop), 
-		count(LoopStmt loop | isSource(loop) and isRetryLoop(loop) and isNotCaught(loop, tt) | loop),
-		concat(LoopStmt loop | isSource(loop) and isRetryLoop(loop) and isCaughtExactlyAndRetried(loop, tt) | loop.getLocation().(GithubLocation).getGithubURL()+" "+getMethodList(loop,tt), " | "), 
-		concat(LoopStmt loop | isSource(loop) and isRetryLoop(loop) and isCaughtImplicitlyAndRetried(loop, tt) | loop.getLocation().(GithubLocation).getGithubURL()+" "+getMethodList(loop,tt), " | "),
-		concat(LoopStmt loop | isSource(loop) and isRetryLoop(loop) and isCaughtExactlyAndNotRetried(loop, tt) | loop.getLocation().(GithubLocation).getGithubURL()+" "+getMethodList(loop,tt), " | "), 
-		concat(LoopStmt loop | isSource(loop) and isRetryLoop(loop) and isCaughtImplicitlyAndNotRetried(loop, tt) | loop.getLocation().(GithubLocation).getGithubURL()+" "+getMethodList(loop,tt), " | "), 
-		concat(LoopStmt loop | isSource(loop) and isRetryLoop(loop) and isNotCaught(loop, tt) | loop.getLocation().(GithubLocation).getGithubURL()+" "+getMethodList(loop,tt), " | ")
+from LoopStmt loop, MethodAccess ma, RefType type 
+where isRetryLoop(loop) and ma.getAnEnclosingStmt() = loop and ma.getMethod().getAThrownExceptionType() = type and 
+	not exists(CatchClause cc | ma.getAnEnclosingStmt() = cc) and
+	not exists(TryStmt ts | ma.getAnEnclosingStmt() = ts.getFinally())
+select 
+	loop.getLocation().(GithubLocation).getGithubURL(), 
+	ma.getMethod().getQualifiedName(), 
+	type.getQualifiedName(), 
+	ma.getEnclosingCallable().getQualifiedName(),
+	isRetried(loop, type)
