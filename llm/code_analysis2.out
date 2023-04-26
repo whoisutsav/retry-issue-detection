@@ -1,0 +1,155 @@
+org/apache/hadoop/hbase/LocalHBaseCluster.java;;;No retry functionality is implemented in this code.
+org/apache/hadoop/hbase/SplitLogTask.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/backup/example/HFileArchiveManager.java;;;No, the code doesn't contain retry functionality.
+org/apache/hadoop/hbase/backup/example/TableHFileArchiveTracker.java;;;Yes, this Java code contains retry functionality. It does not retry on any errors but it does retry on ZK Connection errors. There are no specific methods dedicated for retry but retry is implemented when creating the archive tracker to monitor the ZooKeeper cluster.
+org/apache/hadoop/hbase/client/ClientSideRegionScanner.java;;;No, this Java code does not contain retry functionality because it does not contain any code to repeat an operation in case of a failure.
+org/apache/hadoop/hbase/client/locking/LockServiceClient.java;;;The provided Java code does not contain retry functionality. There are no methods that perform a retry, and no errors that trigger a retry.
+org/apache/hadoop/hbase/constraint/ConstraintProcessor.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/coordination/SplitLogManagerCoordination.java;;;No, the following java code does not contain retry functionality.
+org/apache/hadoop/hbase/coordination/SplitLogWorkerCoordination.java;;;The given Java code does not contain retry functionality.
+org/apache/hadoop/hbase/filter/FilterWrapper.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/io/hfile/CacheConfig.java;;;No, this Java code does not contain retry functionality.
+org/apache/hadoop/hbase/io/hfile/CompoundBloomFilterWriter.java;;;No, the following Java code does not contain retry functionality.
+org/apache/hadoop/hbase/io/hfile/HFileScanner.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/io/hfile/TinyLfuBlockCache.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/ipc/BalancedQueueRpcExecutor.java;;;No, the following java code does not contain retry functionality.
+org/apache/hadoop/hbase/ipc/FastPathRWQueueRpcExecutor.java;;;No, this Java code does not contain retry functionality.
+org/apache/hadoop/hbase/ipc/SimpleRpcScheduler.java;;;No, the Java code does not contain retry functionality.
+org/apache/hadoop/hbase/master/MasterWalManager.java;;;Yes, the code contains retry functionality. Retry logic is present in the method "getFailedServersFromLogFolders()" which is obsolete and replaced by procedure-based WAL splitting method SplitWALManager().  However, the retry logic is present in the older method for continued usage. The retry is performed when there is an IOException during the log splitting process, and it is triggered by "checkFileSystem()".
+org/apache/hadoop/hbase/master/RegionServerTracker.java;;;Yes, the code contains retry functionality for the communication with ZooKeeper. However, retry is not explicitly programmed in the code; instead, the retry is performed implicitly by the library used to interact with ZooKeeper (ZKUtil). When calling ZKUtil.listChildrenAndWatchForNewChildren, the method may throw a KeeperException, and the method retries the operation internally. Therefore, we cannot tell how many times the method retries before reporting the exception.
+org/apache/hadoop/hbase/master/SplitWALManager.java;;;No, the code does not contain retry functionality. There are no methods that explicitly retry a failed operation, nor are there any error-handling mechanisms that would trigger automatic retries.
+org/apache/hadoop/hbase/master/TableStateManager.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/master/WorkerAssigner.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/master/assignment/AssignProcedure.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/master/assignment/CloseRegionProcedure.java;;;No, this Java code does not contain retry functionality.
+org/apache/hadoop/hbase/master/assignment/GCRegionProcedure.java;;;No, the code does not contain any retry functionality.
+org/apache/hadoop/hbase/master/assignment/MoveRegionProcedure.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/master/assignment/RegionStateNode.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/master/assignment/RegionTransitionProcedure.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/master/assignment/UnassignProcedure.java;;;No, this Java code does not contain retry functionality.
+org/apache/hadoop/hbase/master/balancer/BalancerChore.java;;;No, the following Java code does not contain retry functionality.
+org/apache/hadoop/hbase/master/balancer/MaintenanceLoadBalancer.java;;;No, there is no retry functionality in this Java code.
+org/apache/hadoop/hbase/master/locking/LockProcedure.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/master/normalizer/RegionNormalizerChore.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/master/procedure/AbstractStateMachineNamespaceProcedure.java;;;No, the code does not contain explicit retry functionality.
+org/apache/hadoop/hbase/master/procedure/AbstractStateMachineRegionProcedure.java;;;No, this java code does not contain retry functionality.
+org/apache/hadoop/hbase/master/procedure/AbstractStateMachineTableProcedure.java;;;No, the code does not contain retry functionality. There is no explicit retry logic and no retry-related methods are present.
+org/apache/hadoop/hbase/master/procedure/CreateNamespaceProcedure.java;;;No, the code does not contain retry functionality. There are no methods that retry, and no errors trigger a retry.
+org/apache/hadoop/hbase/master/procedure/CreateTableProcedure.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/master/procedure/DeleteNamespaceProcedure.java;;;No, the java code does not contain retry functionality.
+org/apache/hadoop/hbase/master/procedure/DeleteTableProcedure.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/master/procedure/DisableTableProcedure.java;;;No, the code doesn't contain retry functionality.
+org/apache/hadoop/hbase/master/procedure/EnableTableProcedure.java;;;No, the following java code does not contain retry functionality.
+org/apache/hadoop/hbase/master/procedure/InitMetaProcedure.java;;;Yes, this code contains retry functionality. The retry logic is present in the executeFromState() method. If an IOException is thrown in the INIT_META_WRITE_FS_LAYOUT state, a retry attempt is made with an increasing backoff time. If a retry is attempted, the procedure is suspended and a ProcedureSuspendedException is thrown. The error that triggers the retry is an IOException while writing the filesystem layout.
+org/apache/hadoop/hbase/master/procedure/ModifyNamespaceProcedure.java;;;No, the code does not contain retry functionality. There are no methods that attempt an operation multiple times, and there are no error handlers that trigger a retry.
+org/apache/hadoop/hbase/master/procedure/ModifyTableDescriptorProcedure.java;;;No, the following java code does not contain retry functionality.
+org/apache/hadoop/hbase/master/procedure/ModifyTableProcedure.java;;;No, the following java code does not contain retry functionality.
+org/apache/hadoop/hbase/master/procedure/RecoverMetaProcedure.java;;;No, the java code does not contain any retry functionality. There is no retry mechanism present in any of the methods, and there is no error listed that triggers a retry.
+org/apache/hadoop/hbase/master/procedure/ReopenTableRegionsProcedure.java;;;Yes, the given Java code contains retry functionality. The retry is performed in the "executeFromState" method when the procedure is in the REOPEN_TABLE_REGIONS_CONFIRM_REOPENED state. If there are still regions that need to be reopened and are in the OPENING state, the procedure suspends itself for a certain amount of time and retries later. The errors that trigger retry are not explicitly defined, but the procedure checks if the regions that need to be reopened are in the OPENING state and if they can be scheduled.
+org/apache/hadoop/hbase/master/procedure/SplitWALProcedure.java;;;Yes, this Java code contains retry functionality. Retries are performed in the ACQUIRE_SPLIT_WAL_WORKER state if there is an IOException when trying to check if the split WAL task has finished. The error that triggers the retry is an IOException. The code creates a RetryCounter object to manage the retry logic, and the waiting time between retries is calculated from the configuration of the Master node.
+org/apache/hadoop/hbase/master/procedure/SplitWALRemoteProcedure.java;;;Yes, this Java code contains retry functionality.
+
+Retry is performed in the following method:
+- `complete(MasterProcedureEnv env, Throwable error)`
+
+Errors that trigger retry are not explicitly defined, as the `else` block in this method simply retries the operation if the error is not a `DoNotRetryIOException`. However, the comment in the Java code suggests that `SplitWALRemoteProcedure` will retry until success, so it is safe to assume that any non-fatal error will trigger a retry.
+org/apache/hadoop/hbase/master/procedure/SwitchRpcThrottleProcedure.java;;;Yes, the code contains retry functionality. The retry is performed in the method "executeFromState" when there is an IOException thrown while storing the RPC throttle value. The retry is triggered by creating a retry counter and setting the state to "WAITING_TIMEOUT".
+org/apache/hadoop/hbase/master/procedure/TruncateTableProcedure.java;;;No, the given Java code does not contain retry functionality. There is no retry logic implemented in any of the methods, and no errors trigger a retry.
+org/apache/hadoop/hbase/master/replication/ModifyPeerProcedure.java;;;Yes, this Java code contains retry functionality. The retry is triggered when an IOException or ReplicationException occurs in the methods prePeerModification(), updatePeerStorage(), reopenRegions(), and updateLastPushedSequenceIdForSerialPeer(). These methods throw a ProcedureSuspendedException, which causes the procedure to be suspended and retried after a certain period of time. The retry interval is determined by the backoff parameter in the suspend() method. The retry is performed until the operation succeeds or the procedure fails due to excessive retries.
+org/apache/hadoop/hbase/master/replication/SyncReplicationReplayWALManager.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/master/replication/SyncReplicationReplayWALRemoteProcedure.java;;;Yes, the code contains retry functionality in the method "truncateWALs". If an IOException is thrown during the truncation of a WAL, it retries the truncation once more. The error that triggers the retry is an IOException.
+org/apache/hadoop/hbase/master/snapshot/TakeSnapshotHandler.java;;;No, the following Java code does not contain retry functionality. There is no code related to retry in any of the methods.
+org/apache/hadoop/hbase/master/zksyncer/ClientZKSyncer.java;;;Yes, the java code contains retry functionality.
+
+In the method `setDataForClientZkUntilSuccess(String node, byte[] data)`, a retry is performed when a `KeeperException` with the code `SESSIONEXPIRED`, `NONODE`, or `NODEEXISTS` is thrown.
+
+In the method `deleteDataForClientZkUntilSuccess(String node)`, a retry is performed when a `KeeperException` with the code `SESSIONEXPIRED` is thrown.
+org/apache/hadoop/hbase/monitoring/MonitoredTaskImpl.java;;;No, the following Java code does not contain retry functionality.
+org/apache/hadoop/hbase/namespace/NamespaceAuditor.java;;;No, the java code does not contain retry functionality.
+org/apache/hadoop/hbase/procedure/MasterProcedureManagerHost.java;;;No, the java code does not contain retry functionality.
+org/apache/hadoop/hbase/procedure/Procedure.java;;;Yes, the Java code contains retry functionality. However, it is not explicitly implemented in the code. Retry functionality is provided by the use of latches that are used to wait for specific events to occur. If the events do not occur within a certain time frame, the latches timeout and the procedure is retried. Specifically, the `waitForLatch` method is called to wait for the completion of specific phases of the procedure, and it uses a specified frequency to wake up and check for errors while waiting. If an error does occur, it is handled by the `ForeignExceptionDispatcher`.
+org/apache/hadoop/hbase/procedure/Subprocedure.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/procedure/ZKProcedureCoordinator.java;;;No, the following Java code does not contain retry functionality.
+org/apache/hadoop/hbase/quotas/MasterQuotasObserver.java;;;No, the code does not contain any explicit retry logic.
+org/apache/hadoop/hbase/quotas/QuotaLimiter.java;;;No, the code doesn't contain retry functionality.
+org/apache/hadoop/hbase/quotas/RateLimiter.java;;;Yes, the code contains retry functionality. However, it is not explicitly called "retry" and it is not part of a separate retry method. Retry is performed inside the "canExecute" method when it waits for a resource to become available. The error that triggers retry is when there are no available resources, and it must wait until one becomes available.
+org/apache/hadoop/hbase/quotas/RegionServerRpcQuotaManager.java;;;Yes, this Java code contains retry functionality.
+
+No methods perform a retry.
+org/apache/hadoop/hbase/quotas/SpaceViolationPolicyEnforcement.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/quotas/TableQuotaSnapshotStore.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/quotas/TimeBasedLimiter.java;;;Yes, the code contains retry functionality. However, it is not explicitly implemented as a retry mechanism. Instead, when a quota is exceeded, a RpcThrottlingException is thrown, which can be caught and retried by the calling code. The following methods perform a retry in case of a quota exceeded exception:
+
+- checkQuota(): this method throws a RpcThrottlingException if any of the quotas are exceeded. If this exception is caught, the calling code can retry the operation.
+- grabQuota(): if the quotas are not exceeded, this method updates the quota limiter. However, if any quotas are exceeded, this method will not update the limiter and the calling code can retry the operation after handling the RpcThrottlingException.
+org/apache/hadoop/hbase/quotas/UserQuotaState.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/regionserver/DefaultStoreFileManager.java;;;No, the code does not contain retry functionality. There is no code block that attempts an operation and then retries it if it fails.
+org/apache/hadoop/hbase/regionserver/FlushNonSloppyStoresFirstPolicy.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/regionserver/KeyValueScanner.java;;;There is no retry functionality in this Java code.
+org/apache/hadoop/hbase/regionserver/LeaseManager.java;;;Yes, the code contains retry functionality. However, the retry is not related to network or service errors but related to retrying the lease operation. In the `renewLease()` method, if the lease does not exist, a `LeaseException` is thrown, which can be caught by the client code and handled accordingly. Therefore, the client code can retry the `renewLease()` method until the lease exists. There are no other retry mechanisms in this code.
+org/apache/hadoop/hbase/regionserver/LogRoller.java;;;No, there is no retry functionality present in this code.
+org/apache/hadoop/hbase/regionserver/MemStoreSizing.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/regionserver/MultiVersionConcurrencyControl.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/regionserver/MutableSegment.java;;;No, the code does not contain retry functionality. There is no looping or retrying of any methods, and no errors are caught and handled in a way that would trigger a retry.
+org/apache/hadoop/hbase/regionserver/ReversedKeyValueHeap.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/regionserver/ReversedStoreScanner.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/regionserver/SegmentFactory.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/regionserver/SegmentScanner.java;;;No, the code does not contain retry functionality as there is no code present to handle any errors that may occur.
+org/apache/hadoop/hbase/regionserver/ServerNonceManager.java;;;Yes, retry functionality is present in the code. Specifically, retry is performed in the startOperation method when a conflict is detected with a running operation. The wait time between retries is set by the variable conflictWaitIterationMs. There is no specific error that triggers retry, but rather a collision with a running operation.
+org/apache/hadoop/hbase/regionserver/SplitLogWorker.java;;;Yes, the following code contains retry functionality. The retry is performed in the method "splitLog()" and is triggered when some of the following exceptions occur:
+
+- RetriesExhaustedException
+- NotServingRegionException
+- ConnectException
+- SocketTimeoutException
+- InterruptedException
+
+The retry is executed by returning the Status.RESIGNED value, which indicates that the current SplitLogWorker quits the current task and makes the manager retry.
+org/apache/hadoop/hbase/regionserver/StripeStoreFlusher.java;;;Yes, the code contains retry functionality.
+
+No method in this code contains retry functionality.
+org/apache/hadoop/hbase/regionserver/TimeRangeTracker.java;;;No, the code does not contain explicit retry functionality. It does not contain any methods that perform retries or errors that trigger retries.
+org/apache/hadoop/hbase/regionserver/compactions/CompactionConfiguration.java;;;No, the code does not contain retry functionality. There are no methods that attempt to retry an operation, and no errors are specified that would trigger a retry.
+org/apache/hadoop/hbase/regionserver/compactions/DateTieredCompactionPolicy.java;;;No, the following java code does not contain retry functionality.
+org/apache/hadoop/hbase/regionserver/compactions/DateTieredCompactor.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/regionserver/compactions/SortedCompactionPolicy.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/regionserver/handler/AssignRegionHandler.java;;;No, the following Java code does not contain retry functionality. There is no explicit retry logic or code implemented in the code.
+org/apache/hadoop/hbase/regionserver/handler/CloseRegionHandler.java;;;No, the following java code does not contain retry functionality.
+org/apache/hadoop/hbase/regionserver/handler/OpenRegionHandler.java;;;Yes, the following Java code contains retry functionality.
+
+There is a while loop in the `updateMeta()` method that waits until the `PostOpenDeployTasksThread` finishes deploying the region. During this time, if the `isRegionStillOpening()` method returns true, the while loop keeps running. This is retry functionality because it will keep trying to update the region's metadata until it succeeds or the region is no longer in the process of opening.
+
+The errors that trigger retry are not explicitly mentioned, but the retry is triggered whenever the `isRegionStillOpening()` method returns true.
+org/apache/hadoop/hbase/regionserver/handler/UnassignRegionHandler.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/regionserver/handler/WALSplitterHandler.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/regionserver/querymatcher/ColumnTracker.java;;;The provided Java code does not contain explicit retry functionality.
+org/apache/hadoop/hbase/regionserver/querymatcher/ExplicitColumnTracker.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/regionserver/querymatcher/NewVersionBehaviorTracker.java;;;No, the java code does not contain retry functionality.
+org/apache/hadoop/hbase/regionserver/querymatcher/RawScanQueryMatcher.java;;;No, this code does not contain retry functionality.
+org/apache/hadoop/hbase/regionserver/querymatcher/ScanQueryMatcher.java;;;No, the provided Java code does not contain retry functionality.
+org/apache/hadoop/hbase/regionserver/querymatcher/ScanWildcardColumnTracker.java;;;No, the given Java code does not contain retry functionality.
+org/apache/hadoop/hbase/regionserver/storefiletracker/ModifyStoreFileTrackerProcedure.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/regionserver/wal/WALActionsListener.java;;;No, this code does not contain retry functionality. There is no code that attempts to retry an operation upon failure. All methods are notification callbacks for events that occur during WAL (write-ahead log) processing.
+org/apache/hadoop/hbase/regionserver/wal/WALCoprocessorHost.java;;;No. The provided Java code does not contain retry functionality.
+org/apache/hadoop/hbase/replication/regionserver/PeerProcedureHandlerImpl.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/replication/regionserver/Replication.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/replication/regionserver/SerialReplicationChecker.java;;;Yes, this Java code contains retry functionality.
+
+Retry is performed in the waitUntilCanPush() method, which uses a while loop to repeatedly check if the entry can be pushed. If the entry cannot be pushed, the thread waits for a predetermined time (specified by the REPLICATION_SERIALLY_WAITING_KEY property) before trying again.
+
+Errors that trigger retry are not explicitly defined in the code, but one possible scenario where retry may occur is when a WAL entry cannot be pushed due to a conflict with the replication order. If this happens, the while loop in waitUntilCanPush() will repeat until the conflict resolves or until the predetermined timeout is reached.
+org/apache/hadoop/hbase/replication/regionserver/SyncReplicationPeerInfoProvider.java;;;No, the code does not contain retry functionality. There is no code in the methods that attempts an operation multiple times in case of failure or error.
+org/apache/hadoop/hbase/replication/regionserver/SyncReplicationPeerInfoProviderImpl.java;;;No, the following Java code does not contain any retry functionality. There is no provision for retry logic in the code.
+org/apache/hadoop/hbase/replication/regionserver/SyncReplicationPeerMappingManager.java;;;No, the following java code does not contain retry functionality.
+org/apache/hadoop/hbase/replication/regionserver/WALEntryStream.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/rsgroup/RSGroupAdminClient.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/rsgroup/RSGroupBasedLoadBalancer.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/rsgroup/RSGroupInfoManager.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/security/access/AuthManager.java;;;No, the code does not contain retry functionality as there are no loops in any of the methods that could be attempted more than once.
+org/apache/hadoop/hbase/security/access/ZKPermissionWatcher.java;;;Yes, the code contains retry functionality. Retry is performed in the method 'start' when it tries to create a new thread to submit a Callable object to retrieve nodes from ZooKeeper using a five-second delay before retrying when catching an exception from the Callable object. However, it only retries once, and the error that triggers retry is KeeperException.
+org/apache/hadoop/hbase/security/token/FsDelegationToken.java;;;Yes, the code contains retry functionality in the method acquireDelegationToken (both overloaded versions). The method tries to obtain an existing delegation token before requesting a new one. If no token is found, it requests a new token using fs.getDelegationToken method, which may throw an exception, and the method may be retried. The errors that trigger a retry are not explicitly defined in the code, but may include any exception thrown by the fs.getDelegationToken method.
+org/apache/hadoop/hbase/security/token/ZKSecretWatcher.java;;;No, the code does not contain retry functionality.
+org/apache/hadoop/hbase/security/visibility/VisibilityLabelFilter.java;;;No, the code does not contain retry functionality. There is no mention of retry or any code involved in handling retry scenarios.
+org/apache/hadoop/hbase/security/visibility/ZKVisibilityLabelWatcher.java;;;No, this Java code does not contain retry functionality.
+org/apache/hadoop/hbase/security/visibility/expression/NonLeafExpressionNode.java;;;No, the code does not contain retry functionality. There are no methods that perform retries or any error handling related to retries.
+org/apache/hadoop/hbase/wal/WALPrettyPrinter.java;;;No, the code does not contain retry functionality.
