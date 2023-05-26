@@ -18,7 +18,9 @@ predicate isSource(Element e) {
  not e.getCompilationUnit().getFile().getRelativePath().toLowerCase().matches("%test%") 
 }
 
+predicate isRetryTest(TestMethod m) {
+	m.getName().toLowerCase().matches("%retry%") or m.getName().toLowerCase().matches("%retries%")
+}
 
-from TestMethod tm
-where tm.getName().toLowerCase().matches("%retry%") or tm.getName().toLowerCase().matches("%retries%")
-select tm.getName(), tm.getDeclaringType().getName(), tm.getLocation().(GithubLocation).getGithubURL()
+
+select avg(TestMethod m | isRetryTest(m) | m.getTotalNumberOfLines()), avg(TestMethod m | not isRetryTest(m) | m.getTotalNumberOfLines()) 

@@ -1,3 +1,6 @@
 .cache/
 codeql/
 databases/
+llm/output
+llm/fragments
+llm/repos

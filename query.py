@@ -1,16 +1,18 @@
+#!/usr/bin/env python3
+
 import os
 import sys
 
 CODEQL_DATABASES_DIR = "./databases"
 DATABASES = [
     "apache_cassandra_f0ad7ea",
-    "apache_hadoop_ee7d178",
-    "apache_hbase_e1ad781",
-    "apache_hive_e427ce0",
-    "apache_kafka_c6590ee",
-    "apache_spark_1979169",
-    "elastic_elasticsearch_7556157",
-    "apache_zookeeper_ab1bdad",
+#    "apache_hadoop_ee7d178",
+#    "apache_hbase_e1ad781",
+#    "apache_hive_e427ce0",
+#    "apache_kafka_c6590ee",
+#    "apache_spark_1979169",
+#    "elastic_elasticsearch_7556157",
+#    "apache_zookeeper_ab1bdad",
 ]
 
 if len(sys.argv) < 2:
