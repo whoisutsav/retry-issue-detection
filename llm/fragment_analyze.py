@@ -9,7 +9,7 @@ import subprocess
 from tqdm import tqdm
 
 LOOP_DIR="./fragments/cassandra_methods/"
-BASE_PROMPT="Does the following method perform retry anywhere? (yes/no) At which line of code is retry performed?"
+BASE_PROMPT="Does the following method resubmit a task to a queue on failure? (yes/no)?"
 
 with open("openai.key") as f:
     key = f.readline().strip()

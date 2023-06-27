@@ -5,9 +5,9 @@ import subprocess
 from tqdm import tqdm
 
 #format: file,start_line,end_line
-FRAGMENT_LOCATIONS = "cassandra_methods_all.csv"
-OUTPUT_DIR = "./fragments/cassandra_methods/"
-SOURCE_DIR = "./repos/cassandra_f0ad7ea/"
+FRAGMENT_LOCATIONS = "hbase_tests_named_retry"
+OUTPUT_DIR = "./fragments/hbase_retry_tests/"
+SOURCE_DIR = "./repos/hbase_e1ad781/"
 
 if not os.path.exists(OUTPUT_DIR):
     os.makedirs(OUTPUT_DIR, exist_ok=True)

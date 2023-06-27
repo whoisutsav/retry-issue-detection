@@ -22,5 +22,11 @@ predicate isRetryTest(TestMethod m) {
 	m.getName().toLowerCase().matches("%retry%") or m.getName().toLowerCase().matches("%retries%")
 }
 
+//select avg(TestMethod m | isRetryTest(m) | m.getTotalNumberOfLines()), avg(TestMethod m | not isRetryTest(m) | m.getTotalNumberOfLines()) 
 
-select avg(TestMethod m | isRetryTest(m) | m.getTotalNumberOfLines()), avg(TestMethod m | not isRetryTest(m) | m.getTotalNumberOfLines()) 
+from TestMethod m
+where isRetryTest(m)
+select m.getLocation().getFile().getRelativePath(),
+        m.getLocation().getStartLine(),
+        m.getBody().getLocation().getEndLine(),
+        m.getLocation().(GithubLocation).getGithubURL()
