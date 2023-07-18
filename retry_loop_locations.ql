@@ -45,10 +45,12 @@ predicate isSource(Element e) {
 // Returns line numbers that are inside a catch block
 string linesInsideCatch(LoopStmt loop) {
 	result=concat(int i | 
+			i in [loop.getLocation().getStartLine() .. loop.getBody().getLocation().getEndLine()] and
 			exists(Stmt s, CatchClause cc | 
 					s.getEnclosingStmt*()=loop and 
 					cc.getEnclosingStmt*() = loop and s.getEnclosingStmt*() = cc and 
-					s.getLocation().getStartLine()=i)
+					s.getLocation().getStartLine()<=i and
+					s.getLocation().getEndLine()>=i)
 			| i.toString(), ";")
 }
 
