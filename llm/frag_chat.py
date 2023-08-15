@@ -9,22 +9,31 @@ import subprocess
 import tiktoken
 from tqdm import tqdm
 
-FRAGMENT_DIR="./fragments/hadoop_common_methods/"
+FRAGMENT_DIR="./fragments/hadoop_retry_loops/"
 SOURCE_DIR="./repos/hadoop_ee7d178/"
+CHECKPOINT_FILE="/tmp/hadoop_infinite_retry"
 
-with open("./hadoop_common_stream_read",'r') as f:
+with open(CHECKPOINT_FILE,'r') as f:
     checkpoint_data=f.read()
 
 PROMPTS=[
         {
-            "prompt":"Does the following code retry a stream read on failure? Please answer yes or no.",
+            "prompt":"Does the following code contain a retry counter variable?",
             "model":"gpt-3.5-turbo",
         },
         {
-            "prompt":"Here is the full class code. Is it possible for a stream read failure in the method above to be retried WITHOUT the stream being re-opened or reset? Assume all other code works correctly.",
+            "prompt":"Does it compare the retry count with a configurable maximum value?",
+            "model":"gpt-3.5-turbo",
+        },
+        {
+            "prompt":"Would the code retry infinitely if configured value was negative?",
+            "model":"gpt-3.5-turbo",
+        },
+        {
+            "prompt":"Here is the rest of the code. Is the there any validation on the configured value to ensure it is not negative?",
             "model":"gpt-4",
             "append_file_contents":True
-        }
+        },
     ]
 
 def get_token_count(messages):
@@ -71,7 +80,7 @@ for file in tqdm(sorted(os.listdir(FRAGMENT_DIR))):
 
     if file in checkpoint_data:
         continue
-    
+
     for i in range(len(PROMPTS)):
         if i==0:
             messages=[
@@ -79,7 +88,7 @@ for file in tqdm(sorted(os.listdir(FRAGMENT_DIR))):
 }
             ]
         else:
-            if PROMPTS[i]["append_file_contents"]:
+            if PROMPTS[i].get("append_file_contents"):
                 with open(SOURCE_DIR+lines[0].strip()) as f:
                     code=f.read()
                 content=PROMPTS[i]["prompt"]+"\n\n"+code

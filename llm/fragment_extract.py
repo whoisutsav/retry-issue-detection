@@ -5,9 +5,9 @@ import subprocess
 from tqdm import tqdm
 
 #format: file,start_line,end_line
-FRAGMENT_LOCATIONS = "hbase_tests_named_retry"
-OUTPUT_DIR = "./fragments/hbase_retry_tests/"
-SOURCE_DIR = "./repos/hbase_e1ad781/"
+FRAGMENT_LOCATIONS = "hadoop_common_methods"
+OUTPUT_DIR = "./fragments/hadoop_common_methods/"
+SOURCE_DIR = "./repos/hadoop_ee7d178/"
 
 if not os.path.exists(OUTPUT_DIR):
     os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -27,7 +27,7 @@ with open(FRAGMENT_LOCATIONS, "r") as f:
         start_line=int(cols[1])
         end_line=int(cols[2])
 
-        if not relative_path.startswith("src/java/org/apache/cassandra/db") or start_line==end_line:
+        if not os.path.exists(source_file):
             continue
 
         output_file=OUTPUT_DIR+relative_path.replace(".", "_").replace("/","_")+"_"+str(start_line)+"_"+str(end_line)

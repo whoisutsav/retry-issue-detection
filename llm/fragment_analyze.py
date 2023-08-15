@@ -8,19 +8,32 @@ import sys
 import subprocess
 from tqdm import tqdm
 
-LOOP_DIR="./fragments/cassandra_methods/"
-BASE_PROMPT="Does the following method resubmit a task to a queue on failure? (yes/no)?"
+FRAGMENT_DIR="./fragments/kafka_methods/"
+BASE_PROMPT="Does the following code perform retry anywhere? (yes/no)?"
+FILES=[
+        "CommitRequestManager",
+        "TransactionManager_java",
+        "TransactionMarkerChannelManager",
+        "TopicDeletionManager",
+        "BrokerLifecycleManager",
+        "KRaftMigrationDriver",
+        "Sender_java",
+        "TransactionMarkerRequestCompletionHandler"
+        ]
+
 
 with open("openai.key") as f:
     key = f.readline().strip()
     openai.api_key = key
 
-#output_file=open(OUTPUT_FILE, "x")
 
 print(BASE_PROMPT)
 
-for file in tqdm(sorted(os.listdir(LOOP_DIR))):
-    with open(os.path.join(LOOP_DIR,file)) as f: 
+for file in tqdm(sorted(os.listdir(FRAGMENT_DIR))):
+    if not ("Sender_java" in file or "TransactionManager_java" in file): 
+        continue
+
+    with open(os.path.join(FRAGMENT_DIR,file)) as f: 
         lines=f.readlines()
     prompt_string=BASE_PROMPT+"\n\n"+"".join(lines[3:])
     messages=[
@@ -47,6 +60,4 @@ for file in tqdm(sorted(os.listdir(LOOP_DIR))):
     output_line=";;;".join([file,lines[0],lines[1],lines[2],content,classification])
     print(output_line.encode("unicode_escape").decode("utf-8"), file=sys.stdout) 
     sys.stdout.flush()
-    #output_file.flush()
 
-#output_file.close()

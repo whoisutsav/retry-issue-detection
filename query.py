@@ -5,9 +5,9 @@ import sys
 
 CODEQL_DATABASES_DIR = "./databases"
 DATABASES = [
+#    "apache_hadoop_ee7d178",
 #    "apache_cassandra_f0ad7ea",
-    "apache_hadoop_ee7d178",
-#    "apache_hbase_e1ad781",
+    "apache_hbase_e1ad781",
 #    "apache_hive_e427ce0",
 #    "apache_kafka_c6590ee",
 #    "apache_spark_1979169",
