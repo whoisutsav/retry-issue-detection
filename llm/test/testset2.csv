@@ -1,0 +1,8 @@
+file_name,has_retry,has_sleep,has_cap
+hadoop-hdfs-project_hadoop-hdfs-client_src_main_java_org_apache_hadoop_hdfs_protocol_CacheDirectiveIterator.java,No,N/A,N/A
+hadoop-hdfs-project_hadoop-hdfs-client_src_main_java_org_apache_hadoop_hdfs_protocol_ReencryptionStatus.java,No,N/A,N/A
+hadoop-hdfs-project_hadoop-hdfs_src_main_java_org_apache_hadoop_hdfs_security_token_delegation_DelegationTokenSecretManager.java,No,N/A,N/A
+hadoop-hdfs-project_hadoop-hdfs_src_main_java_org_apache_hadoop_hdfs_server_datanode_fsdataset_impl_FsVolumeList.java,No,N/A,N/A
+hadoop-hdfs-project_hadoop-hdfs-client_src_main_java_org_apache_hadoop_hdfs_StripeReader.java,No,N/A,N/A
+hadoop-hdfs-project_hadoop-hdfs-client_src_main_java_org_apache_hadoop_hdfs_DFSInotifyEventInputStream.java,No,N/A,N/A
+hadoop-hdfs-project_hadoop-hdfs-rbf_src_main_java_org_apache_hadoop_hdfs_rbfbalance_RouterFedBalance.java,No,N/A,N/A
