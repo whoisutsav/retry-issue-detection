@@ -1,0 +1,10 @@
+---
+library: true
+name: codeql/regex
+version: 0.0.3
+buildMetadata:
+  sha: 5ae770f33996156df494a9b915139bea4160a120
+  cliVersion: 2.11.6
+dependencies: {}
+groups:
+ - shared
