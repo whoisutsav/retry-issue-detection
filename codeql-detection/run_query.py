@@ -3,7 +3,7 @@
 import os
 import sys
 
-CODEQL_DATABASES_DIR = "../../../databases"
+CODEQL_DATABASES_DIR = "./databases"
 DATABASES = [
     "apache_hadoop_ee7d178",
     "apache_hbase_e1ad781",
@@ -13,7 +13,7 @@ DATABASES = [
 ]
 
 if len(sys.argv) < 2:
-    print("Usage: run_query.py QL_FILE") 
+    print("Usage: run_query.py PATH_TO_QUERY_FILE") 
     sys.exit(1)
 
 QUERY_FILE = sys.argv[1]
