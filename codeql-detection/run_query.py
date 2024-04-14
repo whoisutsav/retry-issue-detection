@@ -30,6 +30,6 @@ for index, db in enumerate(DATABASES):
     incl_headers_flag = "--no-titles" if index != 0 else ""
 
     os.system(f'sed -e "s/%%GITHUB_ORG%%/{github_org}/g" -e "s/%%APP_NAME%%/{app_name}/g" -e "s/%%COMMIT_SHA%%/{commit}/g" {QUERY_FILE} > temp_query.ql')
-    os.system(f'codeql query run --database=./databases/{path_to_db} --additional-packs=. --verbosity=errors --output={app_name}.bqrs temp_query.ql')
+    os.system(f'codeql query run --database=./{path_to_db} --additional-packs=. --verbosity=errors --output={app_name}.bqrs temp_query.ql')
     os.system(f'codeql bqrs decode {incl_headers_flag} --entities=url --format=csv --verbosity=errors {app_name}.bqrs')
     os.system(f'rm {app_name}.bqrs temp_query.ql')
