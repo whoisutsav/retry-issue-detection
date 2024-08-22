@@ -4,7 +4,7 @@ Repo with static scripts and other artifacts for the retry issue project.
 
 ## 1. Retry issues dataset 
 
-Contained in file `retry_issues_in_java_applications.xlsx`
+Contained in file `retry_issue_set.xlsx`
 
 This dataset is used to create Table 1 (# issues per app) and Table 2 (category breakdown)
 
