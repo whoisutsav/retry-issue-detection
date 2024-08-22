@@ -10,9 +10,9 @@ This dataset is used to create **Table 1** (# issues per app) and **Table 2** (c
 
 The issues themselves are discussed in **Section 2**, *"Understanding Retry Issues."*
 
-## 2. Static IF bug detection script
+## 2. Static IF bug detection script (Sec. 3.2.2 & 4.1)
 
-The script is described in **Section 3.2.2**, and results are described in **Section 4.1**, *"Wasabi Static Checking"*: "Wasabi finds **9** outlier cases.."
+The script is described in **Section 3.2.2**, and results shared in **Section 4.1**, *"Wasabi Static Checking"*: "Wasabi finds **9** outlier cases.."
 
 To generate results:
 
