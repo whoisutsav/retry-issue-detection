@@ -37,7 +37,7 @@ The output should match the following:
 
 The outliers (in bold) add up to the 9 cases mentioned.
 
-## 3. Static WHEN bug detection results 
+## 3. Static WHEN bug detection results (Table 4)
 
 These results are used to generate **Table 4**, *"Retry bugs reported by Wasabi GPT-4 detector"*
 
