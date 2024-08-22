@@ -6,13 +6,13 @@ Repo with static scripts and other artifacts for the retry issue project.
 
 Contained in file `retry_issue_set.xlsx`
 
-This dataset is used to create Table 1 (# issues per app) and Table 2 (category breakdown)
+This dataset is used to create **Table 1** (# issues per app) and **Table 2** (category breakdown)
 
-The issues themselves are discussed in Section 2, "Understanding Retry Issues."
+The issues themselves are discussed in **Section 2**, *"Understanding Retry Issues."*
 
 ## 2. Static IF bug detection script
 
-The script is described in 3.2.2, and results are described in Section 4.1, "Wasabi Static Checking":"Wasabi finds 9 outlier cases...".
+The script is described in **Section 3.2.2**, and results are described in **Section 4.1**, *"Wasabi Static Checking"*: "Wasabi finds 9 outlier cases.."
 
 To generate results:
 
@@ -37,7 +37,7 @@ The outliers (in bold) add up to the 9 cases mentioned.
 
 ## 3. Static WHEN bug detection results 
 
-These results are used to generate Table 4, "Retry bugs reported by Wasabi GPT-4 detector"
+These results are used to generate **Table 4**, *"Retry bugs reported by Wasabi GPT-4 detector"*
 
 The raw results are included in the file `wasabi_gpt_detection_results--table4.xlsx`
 
