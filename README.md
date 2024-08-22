@@ -2,7 +2,7 @@
 
 Repo with static scripts and other artifacts for the retry issue project.
 
-## 1. Retry issues dataset 
+## 1. Retry issues dataset (Table 2)
 
 Contained in file `retry_issue_set.xlsx`
 
