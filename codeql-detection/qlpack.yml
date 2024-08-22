@@ -1,4 +1,0 @@
-name: retry-issue-detection 
-version: 0.1.0
-dependencies:
-  codeql/java-all: ^0.0.1
